@@ -1,0 +1,36 @@
+{
+  "name": "dom-to-pdf",
+  "version": "0.0.1",
+  "description": "Generates a pdf from DOM node using HTML5 canvas and svg.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ovvn/dom-to-pdf.git"
+  },
+  "dependencies": {
+    "dom-to-image": "git://github.com/dmapper/dom-to-image",
+    "jspdf": "^1.5.3"
+  },
+  "keywords": [
+    "javascript",
+    "dom",
+    "pdf",
+    "html",
+    "canvas",
+    "svg",
+    "client-side"
+  ],
+  "author": {
+    "name": "Osman Mazinov",
+    "email": "omazinov@gmail.com",
+    "url": "https://ovvn.github.io"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ovvn/dom-to-pdf/issues"
+  },
+  "homepage": "https://github.com/ovvn/dom-to-pdf#readme"
+}
