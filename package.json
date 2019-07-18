@@ -1,6 +1,6 @@
 {
   "name": "dom-to-pdf",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Generates a pdf from DOM node using HTML5 canvas and svg.",
   "main": "index.js",
   "scripts": {
