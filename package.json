@@ -1,7 +1,7 @@
 {
   "name": "dom-to-pdf",
   "version": "0.1.0",
-  "description": "Generates a pdf from DOM node using HTML5 canvas and svg.",
+  "description": "Generates a printable paginated pdf from DOM node using HTML5 canvas and svg.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,7 +21,10 @@
     "html",
     "canvas",
     "svg",
-    "client-side"
+    "client-side",
+    "print",
+    "paginate",
+    "page-break"
   ],
   "author": {
     "name": "Osman Mazinov",

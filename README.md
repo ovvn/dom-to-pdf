@@ -25,7 +25,7 @@ domToPdf(element, options, function() {
 * `filename` - string, name of resulted PDF file, default is 'generated.pdf'
 * `excludeClassNames` - array of strings, list of class names to exclude from DOM
 * `overrideWidth` - number, overrides a width of a container DOM element 
-* `proxyUrl` - string, e.g. `/api/proxyImage?url=`, a route in your app which renders images on your domain in order to avoid problems with CORS with the images on the DOM
+* `proxyUrl` - string, e.g. `/api/proxyImage?url=`, a route in your app which renders images on your domain in order to avoid problems with CORS with the images on a DOM
 
 ## Support
 <a href='https://ko-fi.com/Y8Y5ZDQP' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
