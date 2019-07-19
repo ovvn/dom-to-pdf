@@ -22,8 +22,8 @@ domToPdf(element, options, function() {
 ```
 
 ## Options
-* `filename` - string, name of resulted PDF file, default is 'generated.pdf'
-* `excludeClassNames` - array of strings, list of class names to exclude from DOM
+* `filename` - string, name of resulted PDF file, default name is `generated.pdf`
+* `excludeClassNames` - array of strings, list of class names of elements to exclude from PDF, e.g. `['Loading', 'ExcludeMeFromPdf']`
 * `overrideWidth` - number, overrides a width of a container DOM element 
 * `proxyUrl` - string, e.g. `/api/proxyImage?url=`, a route in your app which renders images on your domain in order to avoid problems with CORS with the images on a DOM
 
@@ -33,6 +33,8 @@ domToPdf(element, options, function() {
 Support me with a coin
 
 BTC 14VroJFPkqKPUSafverhgsZJyqrzYXm3zn
+
+<a href='https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=N4989JZU4MV6Y&item_name=Support&currency_code=USD&source=url' target='_blank'>Paypal</a>
 
 
 <a href='https://money.yandex.ru/to/410012447478695' target='_blank'>Yandex Money</a>
