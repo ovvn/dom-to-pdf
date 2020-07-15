@@ -1,12 +1,14 @@
-'use strict';
+let _cloneNode;
+let _createElement;
+let _isCanvasBlank;
+let downloadPdf;
 
-var _cloneNode, _createElement, _isCanvasBlank, domToImage, jsPDF, downloadPdf;
+const domToImage = require('dom-to-image');
+const jsPDF = require('jspdf');
 
-domToImage = require('dom-to-image');
-jsPDF = require('jspdf');
-
-_cloneNode = function(node, javascriptEnabled) {
-  var child, clone;
+_cloneNode = (node, javascriptEnabled) => {
+  let child;
+  let clone;
   clone = node.nodeType === 3 ? document.createTextNode(node.nodeValue) : node.cloneNode(false);
   child = node.firstChild;
   while (child) {
@@ -23,7 +25,7 @@ _cloneNode = function(node, javascriptEnabled) {
     } else if (node.nodeName === 'TEXTAREA' || node.nodeName === 'SELECT') {
       clone.value = node.value;
     }
-    clone.addEventListener('load', (function() {
+    clone.addEventListener('load', (() => {
       clone.scrollTop = node.scrollTop;
       clone.scrollLeft = node.scrollLeft;
     }), true);
@@ -31,29 +33,32 @@ _cloneNode = function(node, javascriptEnabled) {
   return clone;
 };
 
-_createElement = function(tagName, opt) {
-  var el, i, key, scripts;
+_createElement = (tagName, {className, innerHTML, style}) => {
+  let el;
+  let i;
+  let key;
+  let scripts;
   el = document.createElement(tagName);
-  if (opt.className) {
-    el.className = opt.className;
+  if (className) {
+    el.className = className;
   }
-  if (opt.innerHTML) {
-    el.innerHTML = opt.innerHTML;
+  if (innerHTML) {
+    el.innerHTML = innerHTML;
     scripts = el.getElementsByTagName('script');
     i = scripts.length;
     while (i-- > 0) {
       scripts[i].parentNode.removeChild(scripts[i]);
-      null;
     }
   }
-  for (key in opt.style) {
-    el.style[key] = opt.style[key];
+  for (key in style) {
+    el.style[key] = style[key];
   }
   return el;
 };
 
-_isCanvasBlank = function(canvas) {
-  var blank, ctx;
+_isCanvasBlank = canvas => {
+  let blank;
+  let ctx;
   blank = document.createElement('canvas');
   blank.width = canvas.width;
   blank.height = canvas.height;
@@ -63,10 +68,22 @@ _isCanvasBlank = function(canvas) {
   return canvas.toDataURL() === blank.toDataURL();
 };
 
-downloadPdf = function(dom, options, cb) {
-  var a4Height, a4Width, overrideWidth, container, containerCSS,
-    containerWidth, elements, excludeClassNames, filename, filterFn,
-    innerRatio, overlay, overlayCSS, pageHeightPx, proxyUrl;
+downloadPdf = (dom, options, cb) => {
+  const a4Height = 595.28;
+  const a4Width = 841.89;
+  let overrideWidth;
+  let container;
+  let containerCSS;
+  let containerWidth;
+  let elements;
+  let excludeClassNames;
+  let filename;
+  let filterFn;
+  let innerRatio;
+  let overlay;
+  let overlayCSS;
+  let pageHeightPx;
+  let proxyUrl;
 
   ({filename, excludeClassNames = [], overrideWidth, proxyUrl} = options);
 
@@ -102,14 +119,17 @@ downloadPdf = function(dom, options, cb) {
   container.appendChild(_cloneNode(dom));
   overlay.appendChild(container);
   document.body.appendChild(overlay);
-  a4Width = 595.28;
-  a4Height = 841.89;
   innerRatio = a4Height / a4Width;
   containerWidth = overrideWidth || container.getBoundingClientRect().width;
   pageHeightPx = Math.floor(containerWidth * innerRatio);
   elements = container.querySelectorAll('*');
-  Array.prototype.forEach.call(elements, function(el) {
-    var clientRect, endPage, nPages, pad, rules, startPage;
+  Array.prototype.forEach.call(elements, el => {
+    let clientRect;
+    let endPage;
+    let nPages;
+    let pad;
+    let rules;
+    let startPage;
     rules = {
       before: false,
       after: false,
@@ -129,7 +149,7 @@ downloadPdf = function(dom, options, cb) {
         pad = _createElement('div', {
           style: {
             display: 'block',
-            height: pageHeightPx - clientRect.top % pageHeightPx + 'px'
+            height: `${pageHeightPx - clientRect.top % pageHeightPx}px`
           }
         });
         return el.parentNode.insertBefore(pad, el);
@@ -138,24 +158,37 @@ downloadPdf = function(dom, options, cb) {
   });
 
   // Remove unnecessary elements from result pdf
-  filterFn = function(node) {
-    var cName, j, len, ref, ref1;
-    if (node.classList) {
+  filterFn = ({classList, tagName}) => {
+    let cName;
+    let j;
+    let len;
+    let ref;
+    let ref1;
+    if (classList) {
       for (j = 0, len = excludeClassNames.length; j < len; j++) {
         cName = excludeClassNames[j];
-        if (Array.prototype.indexOf.call(node.classList, cName) >= 0) {
+        if (Array.prototype.indexOf.call(classList, cName) >= 0) {
           return false;
         }
       }
     }
-    return (ref = (ref1 = node.tagName) != null ? ref1.toLowerCase() : void 0) !== 'button' && ref !== 'input' && ref !== 'select';
+    return (ref = (ref1 = tagName) != null ? ref1.toLowerCase() : void 0) !== 'button' && ref !== 'input' && ref !== 'select';
   };
 
   return domToImage.toCanvas(container, {
     filter: filterFn,
     proxy: proxyUrl
-  }).then(function(canvas) {
-    var h, imgData, nPages, page, pageCanvas, pageCtx, pageHeight, pdf, pxFullHeight, w;
+  }).then(canvas => {
+    let h;
+    let imgData;
+    let nPages;
+    let page;
+    let pageCanvas;
+    let pageCtx;
+    let pageHeight;
+    let pdf;
+    let pxFullHeight;
+    let w;
     // Remove overlay
     document.body.removeChild(overlay);
     // Initialize the PDF.
@@ -197,7 +230,7 @@ downloadPdf = function(dom, options, cb) {
       cb();
     }
     return pdf.save(filename);
-  }).catch(function(error) {
+  }).catch(error => {
     // Remove overlay
     document.body.removeChild(overlay);
     if (typeof cb === "function") {
