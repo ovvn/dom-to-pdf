@@ -40,7 +40,7 @@ BTC 14VroJFPkqKPUSafverhgsZJyqrzYXm3zn
 <a href='https://money.yandex.ru/to/410012447478695' target='_blank'>Yandex Money</a>
 
 ## MIT License
-Copyright (c) 2020 Osman Mazinov
+Copyright (c) 2021 Osman Mazinov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
