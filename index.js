@@ -84,8 +84,9 @@ downloadPdf = (dom, options, cb) => {
   let overlayCSS;
   let pageHeightPx;
   let proxyUrl;
+  let reduceSize;
 
-  ({filename, excludeClassNames = [], overrideWidth, proxyUrl} = options);
+  ({filename, excludeClassNames = [], overrideWidth, proxyUrl, reduceSize} = options);
 
   overlayCSS = {
     position: 'fixed',
@@ -223,7 +224,11 @@ downloadPdf = (dom, options, cb) => {
         pdf.addPage();
       }
       imgData = pageCanvas.toDataURL('image/PNG');
-      pdf.addImage(imgData, 'PNG', 0, 0, a4Width, pageHeight);
+      if (reduceSize) {
+        pdf.addImage(imgData, 'PNG', 0, 0, a4Width, pageHeight, undefined, 'MEDIUM');
+      } else {
+        pdf.addImage(imgData, 'PNG', 0, 0, a4Width, pageHeight);
+      }
       ++page;
     }
     if (typeof cb === "function") {

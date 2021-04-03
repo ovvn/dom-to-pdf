@@ -26,6 +26,7 @@ domToPdf(element, options, function() {
 * `excludeClassNames` - array of strings, list of class names of elements to exclude from PDF, e.g. `['Loading', 'ExcludeMeFromPdf']`
 * `overrideWidth` - number, overrides a width of a container DOM element 
 * `proxyUrl` - string, e.g. `/api/proxyImage?url=`, a route in your app which renders images on your domain in order to avoid problems with CORS with the images on a DOM
+* `reduceSize` - boolean, e.g. `true/false`, if set, the PDF created is MUCH smaller (up to 40x smaller) quality may be reduced as well. (the default is false)
 
 ## Support
 <a href='https://ko-fi.com/Y8Y5ZDQP' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
