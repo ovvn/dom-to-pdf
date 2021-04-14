@@ -190,6 +190,9 @@ downloadPdf = (dom, options, cb) => {
     let pdf;
     let pxFullHeight;
     let w;
+    let imgProps;
+    let pdfW;
+    let pdfH;
     // Remove overlay
     document.body.removeChild(overlay);
     // Initialize the PDF.
@@ -198,7 +201,7 @@ downloadPdf = (dom, options, cb) => {
     pxFullHeight = canvas.height;
     nPages = Math.ceil(pxFullHeight / pageHeightPx);
     // Define pageHeight separately so it can be trimmed on the final page.
-    pageHeight = a4Height;
+    pageHeight = pdfH;
     pageCanvas = document.createElement('canvas');
     pageCtx = pageCanvas.getContext('2d');
     pageCanvas.width = canvas.width;
@@ -207,7 +210,7 @@ downloadPdf = (dom, options, cb) => {
     while (page < nPages) {
       if (page === nPages - 1 && pxFullHeight % pageHeightPx !== 0) {
         pageCanvas.height = pxFullHeight % pageHeightPx;
-        pageHeight = pageCanvas.height * a4Width / pageCanvas.width;
+        pageHeight = pageCanvas.height * pdfW / pageCanvas.width;
       }
       w = pageCanvas.width;
       h = pageCanvas.height;
@@ -219,12 +222,15 @@ downloadPdf = (dom, options, cb) => {
         ++page;
         continue;
       }
+      imgData = pageCanvas.toDataURL('image/PNG');
+      imgProps = pdf.getImageProperties(imgData);
+      pdfW = pdf.internal.pageSize.getWidth();
+      pdfH = (imgProps.height * pdfW) / imgProps.width;
       // Add the page to the PDF.
       if (page) {
-        pdf.addPage();
+        pdf.addPage([pdfW, pdfH]);
       }
-      imgData = pageCanvas.toDataURL('image/PNG');
-      pdf.addImage(imgData, 'PNG', 0, 0, a4Width, pageHeight, undefined, compression);
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfW, pdfH, undefined, compression);
       ++page;
     }
     if (typeof cb === "function") {
