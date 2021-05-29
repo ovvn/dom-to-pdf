@@ -77,6 +77,7 @@ downloadPdf = (dom, options, cb) => {
   let containerWidth;
   let elements;
   let excludeClassNames;
+  let excludeTagNames;
   let filename;
   let filterFn;
   let innerRatio;
@@ -86,7 +87,7 @@ downloadPdf = (dom, options, cb) => {
   let proxyUrl;
   let compression = 'NONE';
 
-  ({filename, excludeClassNames = [], overrideWidth, proxyUrl, compression} = options);
+  ({filename, excludeClassNames = [], excludeTagNames = ['button', 'input', 'select'], overrideWidth, proxyUrl, compression} = options);
 
   overlayCSS = {
     position: 'fixed',
@@ -124,6 +125,26 @@ downloadPdf = (dom, options, cb) => {
   containerWidth = overrideWidth || container.getBoundingClientRect().width;
   pageHeightPx = Math.floor(containerWidth * innerRatio);
   elements = container.querySelectorAll('*');
+
+  for (let i = 0, len = excludeClassNames.length; i < len; i++) {
+    const clName = excludeClassNames[i];
+    container.querySelectorAll(`.${clName}`).forEach(function(a) {
+      return a.remove();
+    });
+  }
+
+  for (let j = 0, len1 = excludeTagNames.length; j < len1; j++) {
+    const tName = excludeTagNames[j];
+    let els = container.getElementsByTagName(tName);
+
+    for (let k = els.length - 1; k >= 0; k--) {
+      if (!els[k]) {
+        continue;
+      }
+      els[k].parentNode.removeChild(els[k]);
+    }
+  }
+
   Array.prototype.forEach.call(elements, el => {
     let clientRect;
     let endPage;
@@ -164,7 +185,6 @@ downloadPdf = (dom, options, cb) => {
     let j;
     let len;
     let ref;
-    let ref1;
     if (classList) {
       for (j = 0, len = excludeClassNames.length; j < len; j++) {
         cName = excludeClassNames[j];
@@ -173,7 +193,8 @@ downloadPdf = (dom, options, cb) => {
         }
       }
     }
-    return (ref = (ref1 = tagName) != null ? ref1.toLowerCase() : void 0) !== 'button' && ref !== 'input' && ref !== 'select';
+    ref = tagName != null ? tagName.toLowerCase() : undefined;
+    return excludeTagNames.indexOf(ref) < 0;
   };
 
   return domToImage.toCanvas(container, {
