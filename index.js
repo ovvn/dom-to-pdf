@@ -69,8 +69,8 @@ _isCanvasBlank = canvas => {
 };
 
 downloadPdf = (dom, options, cb) => {
-  const a4Height = 595.28;
-  const a4Width = 841.89;
+  const a4Height = 841.89;
+  const a4Width = 595.28;
   let overrideWidth;
   let container;
   let containerCSS;
