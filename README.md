@@ -16,7 +16,7 @@ var element = document.getElementById('test');
 var options = {
   filename: 'test.pdf'
 };
-domToPdf(element, options, function() {
+domToPdf(element, options, function(pdf) {
   console.log('done');
 });
 ```
