@@ -249,14 +249,14 @@ downloadPdf = (dom, options, cb) => {
       ++page;
     }
     if (typeof cb === "function") {
-      cb();
+      cb(pdf);
     }
     return pdf.save(filename);
   }).catch(error => {
     // Remove overlay
     document.body.removeChild(overlay);
     if (typeof cb === "function") {
-      cb();
+      cb(null);
     }
     return console.error(error);
   });
