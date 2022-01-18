@@ -8,10 +8,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ovvn/dom-to-pdf.git"
+    "url": "https://github.com/ovvn/dom-to-pdf"
   },
   "dependencies": {
-    "dom-to-image": "https://github.com/dmapper/dom-to-image.git",
+    "dom-to-image": "https://github.com/dmapper/dom-to-image",
     "jspdf": "^1.5.3"
   },
   "keywords": [
