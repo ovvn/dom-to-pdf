@@ -4,7 +4,7 @@ let _isCanvasBlank;
 let downloadPdf;
 
 const domToImage = require('dom-to-image');
-const jsPDF = require('jspdf');
+const { jsPDF } = require('jspdf');
 
 _cloneNode = (node, javascriptEnabled) => {
   let child;

@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "dom-to-image": "https://github.com/dmapper/dom-to-image",
-    "jspdf": "^1.5.3"
+    "jspdf": "^2.5.1"
   },
   "keywords": [
     "javascript",
