@@ -28,6 +28,7 @@ domToPdf(element, options, function(pdf) {
 * `overrideWidth` - number, overrides a width of a container DOM element 
 * `proxyUrl` - string, e.g. `/api/proxyImage?url=`, a route in your app which renders images on your domain in order to avoid problems with CORS with the images on a DOM
 * `compression` - string, compression of the generated image, can have the values 'NONE', 'FAST', 'MEDIUM' and 'SLOW'. (default is 'NONE')
+* `scale` - number, increases an image's size before exporting to improve the image quality
 
 
 ## Support

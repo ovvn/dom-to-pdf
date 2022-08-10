@@ -86,8 +86,20 @@ downloadPdf = (dom, options, cb) => {
   let pageHeightPx;
   let proxyUrl;
   let compression = 'NONE';
+  let scale;
+  let opts;
+  let offsetHeight;
+  let offsetWidth;
+  let scaleObj;
+  let style;
+  const transformOrigin = 'top left';
+  const pdfOptions = {
+    orientation: 'p',
+    unit: 'pt',
+    format: 'a4'
+  };
 
-  ({filename, excludeClassNames = [], excludeTagNames = ['button', 'input', 'select'], overrideWidth, proxyUrl, compression} = options);
+  ({filename, excludeClassNames = [], excludeTagNames = ['button', 'input', 'select'], overrideWidth, proxyUrl, compression, scale} = options);
 
   overlayCSS = {
     position: 'fixed',
@@ -197,10 +209,30 @@ downloadPdf = (dom, options, cb) => {
     return excludeTagNames.indexOf(ref) < 0;
   };
 
-  return domToImage.toCanvas(container, {
+  opts = {
     filter: filterFn,
     proxy: proxyUrl
-  }).then(canvas => {
+  };
+
+  if (scale) {
+    offsetWidth = container.offsetWidth;
+    offsetHeight = container.offsetHeight;
+    style = {
+      transform: 'scale(' + scale + ')',
+      transformOrigin: transformOrigin,
+      width: offsetWidth + 'px',
+      height: offsetHeight + 'px'
+    };
+    scaleObj = {
+      width: offsetWidth * scale,
+      height: offsetHeight * scale,
+      quality: 1,
+      style: style
+    };
+    opts = Object.assign(opts, scaleObj);
+  }
+
+  return domToImage.toCanvas(container, opts).then(canvas => {
     let h;
     let imgData;
     let nPages;
@@ -214,7 +246,7 @@ downloadPdf = (dom, options, cb) => {
     // Remove overlay
     document.body.removeChild(overlay);
     // Initialize the PDF.
-    pdf = new jsPDF('p', 'pt', 'a4');
+    pdf = new jsPDF(pdfOptions);
     // Calculate the number of pages.
     pxFullHeight = canvas.height;
     nPages = Math.ceil(pxFullHeight / pageHeightPx);
