@@ -1,6 +1,6 @@
 {
   "name": "dom-to-pdf",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Generates a printable paginated pdf from DOM node using HTML5 canvas and svg.",
   "main": "index.js",
   "scripts": {
