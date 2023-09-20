@@ -24,6 +24,10 @@ _cloneNode = (node, javascriptEnabled) => {
       clone.getContext('2d').drawImage(node, 0, 0);
     } else if (node.nodeName === 'TEXTAREA' || node.nodeName === 'SELECT') {
       clone.value = node.value;
+    } else if (node.nodeName === "IMG" && (clone.width === 0 || clone.height === 0)) {
+      const size = node.getBoundingClientRect();
+      clone.width = size.width;
+      clone.height = size.height;
     }
     clone.addEventListener('load', (() => {
       clone.scrollTop = node.scrollTop;
